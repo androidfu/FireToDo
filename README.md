@@ -1,8 +1,8 @@
-# BetterToDo #
+# FireToDo #
 
-BetterToDo was co-written by Bill Mote and Tyler Roach in support of an intermediate Android class being offered by [Charleston's Digital Corridor](http://www.charlestondigitalcorridor.com/).
+FireToDo was co-written by Bill Mote and Tyler Roach in support of an intermediate Android class being offered by [Charleston's Digital Corridor](http://www.charlestondigitalcorridor.com/).
 
-Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscodecamp.android.bettertodo) (COMING SOON!)
+Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscodecamp.android.firetodo) (COMING SOON!)
 
 ### How do I use this code? ###
 
@@ -17,4 +17,4 @@ Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscod
 
 ### Screen Shots ###
 
-![Alt Home Screen](/BetterToDo_HomeScreen.png?raw=true "ToDo List")
+![Alt Home Screen](/FireToDo_HomeScreen.png?raw=true "ToDo List")
