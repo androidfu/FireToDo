@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FireToDo</string>
+    <string name="error_msg_todo_must_not_be_empty">Your ToDo Item may not be empty or contain only spaces.</string>
+    <string name="error_msg_items_must_be_unique">ToDo items must be unique.</string>
+</resources>
