@@ -18,14 +18,13 @@ import hugo.weaving.DebugLog;
 class FirebaseStateManager implements TaskListStateManager {
 
     private static final String TAG = FirebaseStateManager.class.getSimpleName();
-    private static final String TASKS = "tasks";
     private final DatabaseReference databaseReference;
     private DataSetChangedListener dataSetChangedListener;
 
-    FirebaseStateManager() {
+    FirebaseStateManager(String uniqueId) {
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);
-        databaseReference = firebaseDatabase.getReference(TASKS);
+        databaseReference = firebaseDatabase.getReference(uniqueId);
     }
 
     @Override
@@ -39,18 +38,13 @@ class FirebaseStateManager implements TaskListStateManager {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.i(TAG, String.format("%s", snapshot.getValue().toString()));
-                    if (snapshot.getValue(Task.class) != null) {
-                        taskList.add(snapshot.getValue(Task.class));
+                for (DataSnapshot taskDbEntry : dataSnapshot.getChildren()) {
+                    if (taskDbEntry.getValue(Task.class) != null) {
+                        taskList.add(taskDbEntry.getValue(Task.class));
                     }
                 }
                 if (taskList.isEmpty()) {
-                    Task task = new Task("Start Learning Android!");
-                    task.setCompleted(true);
-                    taskList.add(task);
-                    task = new Task("Keep Learning Android!");
-                    taskList.add(task);
+                    createDefaultEntries(taskList);
                 }
                 if (dataSetChangedListener != null) {
                     dataSetChangedListener.onDataSetChanged(taskList);
@@ -59,9 +53,18 @@ class FirebaseStateManager implements TaskListStateManager {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, databaseError.getMessage());
             }
 
         });
+    }
+
+    private void createDefaultEntries(List<Task> taskList) {
+        Task task = new Task("Start Learning Android!");
+        task.setCompleted(true);
+        taskList.add(task);
+        task = new Task("Keep Learning Android!");
+        taskList.add(task);
     }
 
     @Override
