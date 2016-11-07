@@ -10,6 +10,10 @@ import java.util.UUID;
 
 import hugo.weaving.DebugLog;
 
+/**
+ * The Application Class in Android is effectively a singleton and allows you to setup things that
+ * should be used application-wide.
+ */
 @DebugLog
 public class FireToDoApplication extends Application {
 

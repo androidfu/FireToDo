@@ -1,8 +1,11 @@
 package com.chscodecamp.android.firetodo;
 
+/**
+ * Our Task Object.  This will hold all the things we wish to track with regards to a Task.
+ */
+@SuppressWarnings("WeakerAccess")
 class Task {
     public String title;
-    @SuppressWarnings("WeakerAccess")
     public boolean completed;
 
     public Task() {
@@ -16,6 +19,7 @@ class Task {
         return title;
     }
 
+    @SuppressWarnings("unused")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -28,6 +32,7 @@ class Task {
         this.completed = completed;
     }
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

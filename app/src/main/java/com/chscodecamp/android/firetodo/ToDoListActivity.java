@@ -20,8 +20,11 @@ import java.util.List;
 
 import hugo.weaving.DebugLog;
 
+/**
+ * The screen that will show our Task list and allow for task entry.
+ */
 @DebugLog
-public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapter.Callback, TaskListStateListener, View.OnClickListener {
+public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerAdapter.Callback, TaskListStateListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private EditText addItemEditText;
@@ -86,7 +89,8 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
                      * this is considered a best practice (as opposed to hard coding the Strings here)
                      * and will simplify localization in the future.
                      */
-                    addItemEditText.setError(decorateError(getString(R.string.error_msg_items_must_be_unique), 0xFFFFFFFF));
+                    //noinspection deprecation // getColor(int) is deprecated, but is the only method available to us for API 16+
+                    addItemEditText.setError(decorateError(getString(R.string.error_msg_items_must_be_unique), getResources().getColor(android.R.color.white)));
 
                 } else if (!TextUtils.isEmpty(title)) {
                     /**
@@ -102,12 +106,18 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
                     /**
                      * Do not allow the user to save an empty or whitespace-only task.
                      */
-                    addItemEditText.setError(decorateError(getString(R.string.error_msg_todo_must_not_be_empty), 0xFFFFFFFF));
+                    //noinspection deprecation // getColor(int) is deprecated, but is the only method available to us for API 16+
+                    addItemEditText.setError(decorateError(getString(R.string.error_msg_todo_must_not_be_empty), getResources().getColor(android.R.color.white)));
                 }
                 break;
         }
     }
 
+    /**
+     * Executed 1 time when the activity is created.  Setup your views, click listeners, etc. here.
+     *
+     * @param savedInstanceState the incoming bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,9 +127,16 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
+        /**
+         * The + button that will add our task after a task is entered.
+         */
         addItem = (ImageButton) findViewById(R.id.add_item);
         addItem.setOnClickListener(this);
 
+        /**
+         * We can also let the user press the "done" button on the keyboard to indicate the task
+         * is ready to be added to the list.
+         */
         addItemEditText = (EditText) findViewById(R.id.add_item_edit_text);
         addItemEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -133,20 +150,51 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
         });
     }
 
+    /**
+     * Unlike onCreate() which is only called when the activity is created, onResume() is called
+     * any time activity comes into the foreground.  This is where we want to assign the data to
+     * our adapter as the data may have changed while the application was in the background.
+     */
     @Override
     protected void onResume() {
         super.onResume();
+
+        /**
+         * Set our activity as a listener so we can be notified when the StateManager updates
+         * the data.
+         */
         TaskManager.getInstance().setTaskListStateListener(this);
+
+        /**
+         * Get our tasks.  Note: we don't care how we get our tasks.  We simply count on the
+         * getTasks() method to honor the contract of returning a List<Task>.
+         */
         tasks = TaskManager.getInstance().getTasks();
+
+        /**
+         * If our adapter is null then set it up and assign the adapter to our view.
+         */
         if (taskRecyclerAdapter == null) {
             taskRecyclerAdapter = new TaskRecyclerAdapter(tasks, this);
             recyclerView.setAdapter(taskRecyclerAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else {
+
+            /**
+             * If we already had an adapter then just make sure we refresh the view.
+             */
             taskRecyclerAdapter.notifyDataSetChanged();
         }
     }
 
+    /**
+     * Our error message ends up being black-on-black for the given theme so lets decorate the
+     * text such that it will be visible.
+     *
+     * @param errorMessage the text to be decorated
+     * @param color        the color to apply to the text foreground
+     * @return our text colored per the input color argument
+     */
     private CharSequence decorateError(String errorMessage, int color) {
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(color);
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(errorMessage);
