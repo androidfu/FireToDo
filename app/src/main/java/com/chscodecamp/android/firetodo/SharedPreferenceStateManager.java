@@ -76,6 +76,9 @@ class SharedPreferenceStateManager extends BaseStateManager {
         }
     }
 
+    /**
+     * Remove all saved tasks from SharedPreferences.
+     */
     void deleteAllTasks() {
         sharedPreferences.edit().remove(SAVED_TASKS).apply();
     }
