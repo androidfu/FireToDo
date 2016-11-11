@@ -2,6 +2,7 @@ package com.chscodecamp.android.firetodo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
@@ -151,11 +152,13 @@ abstract class BaseStateManager implements TaskListStateManager {
      *
      * @param taskList the task list we will modify with our default entries
      */
+    @CallSuper
     void createDefaultEntries(@NonNull final List<Task> taskList) {
         Task task = new Task("Start Learning Android!");
         task.setCompleted(true);
         taskList.add(task);
         task = new Task("Keep Learning Android!");
+        task.setCompleted(true);
         taskList.add(task);
     }
 }

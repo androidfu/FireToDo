@@ -67,6 +67,7 @@ class FirebaseStateManager extends BaseStateManager {
          * fetch those and return as we shouldn't have anything to load after getting these.
          */
         if (tasksFromUpgrade != null && !tasksFromUpgrade.isEmpty()) {
+
             /**
              * After this method completes we will have update our taskList and we need to tell
              * the adapter to refresh its dataset so they can be displayed on the screen.
@@ -133,5 +134,18 @@ class FirebaseStateManager extends BaseStateManager {
                 Log.e(TAG, databaseError.getMessage());
             }
         });
+    }
+
+    /**
+     * If you're starting off with FireToDo then populate some tasks that everyone should have, but add
+     * a task for this class :)
+     *
+     * @param taskList the task list we will modify with our default entries
+     */
+    @Override
+    void createDefaultEntries(@NonNull List<Task> taskList) {
+        super.createDefaultEntries(taskList);
+        Task task = new Task("Tasks in the Cloud!");
+        taskList.add(task);
     }
 }
