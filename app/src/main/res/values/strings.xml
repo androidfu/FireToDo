@@ -3,4 +3,5 @@
     <string name="error_msg_todo_must_not_be_empty">Your ToDo Item may not be empty or contain only spaces.</string>
     <string name="error_msg_items_must_be_unique">ToDo items must be unique.</string>
     <string name="error_msg_downgrade_not_allowed">Downgrading your data schema is not currently supported.  If you wish to use an older version of the application you must uninstall/reinstall.</string>
+    <string name="add_task">Add Task</string>
 </resources>

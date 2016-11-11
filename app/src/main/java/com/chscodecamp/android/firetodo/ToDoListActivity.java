@@ -1,5 +1,7 @@
 package com.chscodecamp.android.firetodo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.List;
 
@@ -26,11 +29,14 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerAdapter.Callback, TaskListStateListener, View.OnClickListener {
 
+    public static final String KEY_PREFS_HIDE_COMPLETED_TASKS = "hide_completed_tasks";
     private RecyclerView recyclerView;
     private EditText addItemEditText;
     private ImageButton addItem;
     private TaskRecyclerAdapter taskRecyclerAdapter;
+    private ToggleButton hideCompleted;
     private List<Task> tasks;
+    private SharedPreferences sharedPreferences;
 
     /**
      * Our TaskRecyclerAdapter.Callback Interface method onTaskUpdated() is called when a Task is un/marked
@@ -42,6 +48,14 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
     @Override
     public void onTaskUpdated(@NonNull Task task) {
         TaskManager.getInstance().updateTask(task);
+
+        /**
+         * If we're hiding completed tasks then we need to update the incomplete task list in the
+         * adapter.
+         */
+        if (hideCompleted.isChecked()) {
+            taskRecyclerAdapter.updateIncompleteTasks();
+        }
     }
 
     /**
@@ -52,7 +66,20 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
     @Override
     public void onTaskListUpdated() {
         if (taskRecyclerAdapter != null) {
-            taskRecyclerAdapter.notifyDataSetChanged();
+            /**
+             * If we're hiding completed tasks then we need to update the incomplete task list in the
+             * adapter.
+             */
+            if (hideCompleted.isChecked()) {
+                taskRecyclerAdapter.updateIncompleteTasks();
+            } else {
+
+                /**
+                 * We only need to do this in the else-block because updateIncompleteTasks() calls
+                 * notifyDataSetChanged() at the end of the method.
+                 */
+                taskRecyclerAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -65,6 +92,19 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.hide_completed:
+
+                /**
+                 * Tell the adapter that we want to hide our completed tasks.
+                 */
+                taskRecyclerAdapter.setHideCompletedTasks(((ToggleButton) view).isChecked());
+
+                /**
+                 * Store the state of our task visibility so the user won't have to set it every time.
+                 */
+                sharedPreferences.edit().putBoolean(KEY_PREFS_HIDE_COMPLETED_TASKS, ((ToggleButton) view).isChecked()).apply();
+                break;
+
             case R.id.add_item:
 
                 /**
@@ -99,7 +139,7 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
                      */
                     Task task = new Task(title);
                     TaskManager.getInstance().addTask(task);
-                    taskRecyclerAdapter.notifyItemInserted(taskRecyclerAdapter.getItemCount() - 1);
+                    taskRecyclerAdapter.updateIncompleteTasks();
                     addItemEditText.setText(null);
 
                 } else {
@@ -125,7 +165,16 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sharedPreferences = this.getSharedPreferences(FireToDoApplication.class.getCanonicalName(), Context.MODE_PRIVATE);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        /**
+         * The completed tasks visibility button.
+         */
+        hideCompleted = (ToggleButton) findViewById(R.id.hide_completed);
+        hideCompleted.setChecked(sharedPreferences.getBoolean(KEY_PREFS_HIDE_COMPLETED_TASKS, false));
+        hideCompleted.setOnClickListener(this);
 
         /**
          * The + button that will add our task after a task is entered.
@@ -175,7 +224,7 @@ public class ToDoListActivity extends AppCompatActivity implements TaskRecyclerA
          * If our adapter is null then set it up and assign the adapter to our view.
          */
         if (taskRecyclerAdapter == null) {
-            taskRecyclerAdapter = new TaskRecyclerAdapter(tasks, this);
+            taskRecyclerAdapter = new TaskRecyclerAdapter(tasks, hideCompleted.isChecked(), this);
             recyclerView.setAdapter(taskRecyclerAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else {
