@@ -1,5 +1,7 @@
 package com.chscodecamp.android.firetodo;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  * the adapter that the data has changed.
  */
 interface DataSetChangedListener {
-    void onDataSetChanged(List<Task> taskList);
+    void onDataSetChanged(@NonNull final List<Task> taskList);
 }

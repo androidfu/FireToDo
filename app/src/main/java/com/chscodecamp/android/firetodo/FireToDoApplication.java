@@ -18,6 +18,7 @@ import hugo.weaving.DebugLog;
 public class FireToDoApplication extends Application {
 
     public static final String KEY_PREFS_APPLICATION_ID = "applicationId";
+    public static final int DATA_SCHEMA_VERSION = 2;
 
     @Override
     public void onCreate() {
@@ -29,7 +30,8 @@ public class FireToDoApplication extends Application {
          * String will be used to uniquely identify "this" installation of the application so each
          * user's tasks can be stored independently of each others.
          */
-        TaskManager.init(new FirebaseStateManager(this.getApplicationId()));
+        //TaskManager.init(new SharedPreferenceStateManager(this, DATA_SCHEMA_VERSION));
+        TaskManager.init(new FirebaseStateManager(this, this.getApplicationId(), DATA_SCHEMA_VERSION));
     }
 
     /**

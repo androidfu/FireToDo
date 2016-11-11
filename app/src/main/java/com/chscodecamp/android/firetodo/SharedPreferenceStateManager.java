@@ -1,7 +1,6 @@
 package com.chscodecamp.android.firetodo;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -19,10 +18,10 @@ class SharedPreferenceStateManager extends BaseStateManager {
 
     private static final String SAVED_TASKS = "savedTasks";
     private SharedPreferences sharedPreferences;
-    private DataSetChangedListener listener;
 
-    SharedPreferenceStateManager(Application application) {
-        sharedPreferences = application.getSharedPreferences(application.getPackageName(), Context.MODE_PRIVATE);
+    SharedPreferenceStateManager(@NonNull Context context, int dataSchemaVersion) {
+        super(context, dataSchemaVersion);
+        sharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
     }
 
     /**
@@ -61,11 +60,23 @@ class SharedPreferenceStateManager extends BaseStateManager {
         }
 
         /**
+         * If the list is empty after processing all database entries then add default
+         * tasks so our user has something to see when they launch the app.
+         */
+        if (taskList.isEmpty()) {
+            createDefaultEntries(taskList);
+        }
+
+        /**
          * After this method completes we will have update our taskList and we need to tell
          * the adapter to refresh its dataset so they can be displayed on the screen.
          */
-        if (listener != null) {
-            listener.onDataSetChanged(taskList);
+        if (dataSetChangedListener != null) {
+            dataSetChangedListener.onDataSetChanged(taskList);
         }
+    }
+
+    void deleteAllTasks() {
+        sharedPreferences.edit().remove(SAVED_TASKS).apply();
     }
 }

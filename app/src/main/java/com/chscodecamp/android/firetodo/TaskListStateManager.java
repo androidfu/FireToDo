@@ -1,5 +1,6 @@
 package com.chscodecamp.android.firetodo;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -11,9 +12,12 @@ import hugo.weaving.DebugLog;
  */
 @DebugLog
 interface TaskListStateManager {
+
+    void onUpgrade(@NonNull final Context context, final int newVersion, final int oldVersion);
+
     void saveTasks(@NonNull final List<Task> taskList);
 
     void loadTasks();
 
-    void setDataSetChangedListener(DataSetChangedListener listener);
+    void setDataSetChangedListener(@NonNull final DataSetChangedListener listener);
 }
