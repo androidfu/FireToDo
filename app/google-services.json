@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "467640517892",
-    "firebase_url": "https://firetodo-e08a2.firebaseio.com",
-    "project_id": "firetodo-e08a2",
-    "storage_bucket": "firetodo-e08a2.appspot.com"
+    "project_number": "123456789123",
+    "firebase_url": "https://firetodo-f08a2.firebaseio.com",
+    "project_id": "firetodo-f08a2",
+    "storage_bucket": "firetodo-f08a2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:467640517892:android:adafce99e3730e33",
+        "mobilesdk_app_id": "1:467640517892:android:adafce99f3730e33",
         "android_client_info": {
           "package_name": "com.chscodecamp.android.firetodo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "467640517892-dgmpgif93nktbi0qjnnkisppgfn18uai.apps.googleusercontent.com",
+          "client_id": "467640517892-dgmpgif93nktbi0qfnnkisppgfn18uai.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.chscodecamp.android.firetodo",
-            "certificate_hash": "CB5F03FF6F98E9BEEF05FD821303B0A86A02061D"
+            "certificate_hash": "CB5F03FF6F98E9BEEF15FD821303B0A86A02061D"
           }
         },
         {
-          "client_id": "467640517892-pa9r4hdafirhai6l8q77i1ecvh15a5ju.apps.googleusercontent.com",
+          "client_id": "467640517892-pa9r4hdafirhai6l8q77i1fcvh15a5ju.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYT0fVsn-tZKbnl05QPS6KKy1GTAr0LRU"
+          "current_key": "AIzaSyAYT0fVsn-tZKbfl05QPS6KKy1GTAr0LRU"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "467640517892-pa9r4hdafirhai6l8q77i1ecvh15a5ju.apps.googleusercontent.com",
+              "client_id": "467640517892-pa9r4hdafirfai6l8q77i1ecvh15a5ju.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -52,28 +52,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:467640517892:android:adafce99e3730e33",
+        "mobilesdk_app_id": "1:467640517892:android:adafce99f3730e33",
         "android_client_info": {
           "package_name": "com.chscodecamp.android.firetodo.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "467640517892-dgmpgif93nktbi0qjnnkisppgfn18uai.apps.googleusercontent.com",
+          "client_id": "467640517892-dgmpgif93nkfbi0qjnnkisppgfn18uai.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.chscodecamp.android.firetodo.debug",
-            "certificate_hash": "CB5F03FF6F98E9BEEF05FD821303B0A86A02061D"
+            "certificate_hash": "CB5F03FF6F98E9BEEF15FD821303B0A86A02061D"
           }
         },
         {
-          "client_id": "467640517892-pa9r4hdafirhai6l8q77i1ecvh15a5ju.apps.googleusercontent.com",
+          "client_id": "467640517892-pa9r4hdafirhai6l8q77i1fcvh15a5ju.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYT0fVsn-tZKbnl05QPS6KKy1GTAr0LRU"
+          "current_key": "AIzaSyAYT0fVsn-tZKbnl05fPS6KKy1GTAr0LRU"
         }
       ],
       "services": {
@@ -84,7 +84,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "467640517892-pa9r4hdafirhai6l8q77i1ecvh15a5ju.apps.googleusercontent.com",
+              "client_id": "467640517892-pa9r4hdafirhai6l8f77i1ecvh15a5ju.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
