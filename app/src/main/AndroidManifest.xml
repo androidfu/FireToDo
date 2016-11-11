@@ -1,17 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.chscodecamp.android.firetodo">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".FireToDoApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ToDoListActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity-alias
             android:name=".LauncherActivity"
             android:label="@string/app_name"
@@ -22,6 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="" />
     </application>
 
 </manifest>

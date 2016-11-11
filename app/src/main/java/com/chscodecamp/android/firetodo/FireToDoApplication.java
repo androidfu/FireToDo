@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.UUID;
 
 import hugo.weaving.DebugLog;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * The Application Class in Android is effectively a singleton and allows you to setup things that
@@ -23,6 +26,7 @@ public class FireToDoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         /**
          * Init our TaskManager with a new instance of a FirebaseStateManager so we can store our
